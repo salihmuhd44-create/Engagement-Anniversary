@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Happy Valentine's &amp; Anniversary, My Love</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Allura&family=Caveat:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+/* ============ COLOURS & FONTS (change here if you like) ============ */
+:root{
+  --kraft:#cdbfa8; --cream:#f3ead8; --paper:#f8f1e1; --ink:#3b2f2a;
+  --rose:#d9534f; --coral:#ee9a86; --gold:#c9a24a;
+  --script:'Allura','Snell Roundhand',cursive;
+  --hand:'Caveat','Segoe Script',cursive;
+  --serif:'Cormorant Garamond',Georgia,serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--kraft);color:var(--ink);font-family:var(--serif);overflow-x:hidden}
+body.lock{overflow:hidden}
+/* crumpled kraft paper texture (tiny SVG noise, no image file needed) */
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.55;
+  background:
+   url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.035 .05' numOctaves='4' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .28 0 0 0 0 .2 0 0 0 .7 0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E"),
+   radial-gradient(ellipse at 30% 20%,#fff3 0,#0000 60%);}
+main{position:relative;z-index:1}
+img{display:block;max-width:100%}
+
+/* ============ PAGE SECTIONS ============ */
+.page{position:relative;min-height:100vh;padding:clamp(60px,9vw,120px) 4vw;display:flex;flex-direction:column;align-items:center}
+.sheet{position:relative;width:min(1000px,100%);padding:clamp(36px,6vw,80px) clamp(18px,5vw,70px);
+  background:
+   repeating-linear-gradient(transparent 0 33px,#8fa5b533 33px 34px),
+   linear-gradient(#fbf5e6,#f1e6cf);
+  box-shadow:0 14px 30px #4a3a2a55,0 2px 4px #0003;
+  /* torn paper edges */
+  clip-path:polygon(0 2%,3% 0,7% 1.5%,12% 0,19% 1.2%,26% 0,34% 1.5%,41% 0,50% 1%,58% 0,66% 1.6%,74% 0,83% 1.2%,91% 0,96% 1.4%,100% 0,99% 8%,100% 17%,98.6% 28%,100% 40%,99% 52%,100% 63%,98.8% 75%,100% 88%,99% 100%,94% 98.6%,87% 100%,79% 98.8%,70% 100%,61% 98.5%,52% 100%,43% 98.8%,34% 100%,25% 98.6%,16% 100%,8% 98.8%,0 100%,1.2% 90%,0 78%,1.4% 66%,0 54%,1.2% 42%,0 30%,1.3% 18%,0 9%);
+}
+.wrap{filter:drop-shadow(0 12px 14px #4a3a2a66);width:min(1000px,100%);position:relative}
+h1,h2,.script{font-family:var(--script);font-weight:400;line-height:1.05}
+h1{font-size:clamp(46px,9vw,100px);text-align:center}
+h2{font-size:clamp(40px,7vw,72px);text-align:center;margin-bottom:.4em}
+.hand{font-family:var(--hand);font-size:clamp(22px,3.4vw,32px)}
+.center{text-align:center}
+
+/* ============ POLAROIDS + GOLD PINS ============ */
+.polaroid{position:relative;background:#fdfcf8;padding:10px 10px 44px;width:var(--w,240px);
+  box-shadow:0 8px 16px #3b2f2a55,0 1px 2px #0004;rotate:var(--r,0deg);
+  transition:rotate .5s ease,scale .5s ease,box-shadow .5s ease,opacity 1s ease,translate 1s ease}
+.polaroid img{width:100%;aspect-ratio:1/1;object-fit:cover;background:#e6dccb;filter:sepia(.12) saturate(.95)}
+.polaroid figcaption{position:absolute;left:8px;right:8px;bottom:9px;text-align:center;font-family:var(--hand);font-size:21px;line-height:1.1}
+.polaroid:hover{rotate:0deg;scale:1.06;box-shadow:0 18px 30px #3b2f2a66;z-index:5}
+.pin{position:absolute;top:-9px;left:50%;width:22px;height:22px;margin-left:-11px;border-radius:50%;z-index:3;
+  background:radial-gradient(circle at 32% 30%,#fff8d6 0 12%,#e6c566 30%,#b58a2c 70%,#7d5a14);
+  box-shadow:3px 5px 5px #0006}
+/* reveal-on-scroll */
+.rv{opacity:0;translate:0 44px}
+.rv.in{opacity:1;translate:0 0}
+
+/* ============ OPENING ============ */
+#intro{position:fixed;inset:0;z-index:50;display:grid;place-items:center;text-align:center;padding:24px;
+  background:var(--kraft);transition:opacity 1.4s ease,visibility 1.4s}
+#intro.gone{opacity:0;visibility:hidden}
+#intro .note{background:var(--paper);padding:44px 34px;box-shadow:0 10px 30px #4a3a2a66;rotate:-2deg;max-width:420px;animation:rise 1.4s ease both}
+#intro button{margin-top:22px;font:600 24px var(--hand);color:#fff;background:var(--rose);border:0;border-radius:30px;padding:10px 30px;cursor:pointer;box-shadow:0 4px 0 #a33a37;animation:beat 2s infinite}
+#intro .big{font-size:78px;color:var(--rose);animation:beat 1.6s infinite}
+@keyframes rise{from{opacity:0;translate:0 40px}}
+@keyframes beat{50%{scale:1.08}}
+
+/* ============ SECTION 1 ============ */
+.heart-cut{position:absolute;top:-34px;left:50%;margin-left:-34px;width:68px;color:var(--rose);rotate:-8deg;z-index:4;filter:drop-shadow(2px 4px 3px #0004)}
+.hero-photos{position:relative;height:clamp(330px,60vw,470px);margin:34px auto 10px;max-width:760px}
+.hero-photos .polaroid{position:absolute;animation:sway 7s ease-in-out infinite}
+.hero-photos .p1{--w:clamp(150px,29vw,250px);--r:-6deg;left:2%;top:0}
+.hero-photos .p2{--w:clamp(150px,29vw,250px);--r:4deg;left:34%;top:18%;animation-delay:-2s;z-index:2}
+.hero-photos .p3{--w:clamp(150px,29vw,250px);--r:-3deg;right:1%;top:2%;animation-delay:-4s}
+@keyframes sway{50%{rotate:calc(var(--r) + 1.6deg)}}
+.msg{font-size:clamp(28px,5vw,44px);margin-top:10px}
+.names{font-size:clamp(34px,6vw,54px);color:#5a463c;text-align:center;margin-top:8px}
+
+/* ============ SECTION 2: GALLERY ============ */
+.gallery{display:flex;flex-wrap:wrap;justify-content:center;gap:34px 26px;padding:20px 0 30px}
+.gallery .polaroid{translate:0 var(--y,0px)}
+.gallery .polaroid.rv:not(.in){translate:0 calc(var(--y,0px) + 44px)}
+.gallery .s{--w:230px}.gallery .m{--w:270px}.gallery .l{--w:340px}
+.tape{position:absolute;top:-14px;left:50%;width:90px;height:26px;margin-left:-45px;background:#e8d9a8aa;rotate:-4deg;z-index:3;box-shadow:0 1px 3px #0003}
+.leaf{position:absolute;width:clamp(90px,16vw,170px);pointer-events:none;z-index:4;filter:drop-shadow(3px 5px 4px #0004);animation:drift 9s ease-in-out infinite}
+@keyframes drift{50%{translate:6px -12px;rotate:6deg}}
+
+/* ============ SECTION 3: LETTER ============ */
+.letter{max-width:640px;margin:0 auto}
+.letter p{font-family:var(--hand);font-size:clamp(25px,3.8vw,34px);line-height:34px;margin-bottom:34px;color:#2e3a55}
+.letter .sign{text-align:right}
+.hl{background:linear-gradient(transparent 55%,#8bf06a99 55%)}
+
+/* ============ SECTION 4: FINALE ============ */
+.finale .sheet{text-align:center}
+.finale .big{font-family:var(--script);font-size:clamp(44px,9vw,92px);line-height:1.1;margin:10px 0}
+.finale .sub{font-family:var(--hand);font-size:clamp(26px,4.6vw,40px)}
+.forever{display:inline-block;margin-top:30px;font-family:var(--script);font-size:clamp(54px,11vw,110px);color:var(--rose)}
+.forever .h{display:inline-block;animation:beat 1.6s infinite}
+.rose{width:clamp(80px,15vw,150px);margin:0 auto}
+
+/* ============ FLOATING HEARTS (made by JavaScript) ============ */
+.fh{position:fixed;bottom:-40px;z-index:2;pointer-events:none;color:var(--rose);opacity:0;animation:up linear forwards}
+@keyframes up{10%{opacity:.55}90%{opacity:.35}to{translate:var(--dx) -112vh;opacity:0;rotate:30deg}}
+
+/* torn-strip divider between pages */
+.rip{height:46px;margin-top:-23px;position:relative;z-index:2;background:#f1e6cf;opacity:.9;
+  clip-path:polygon(0 40%,4% 10%,9% 50%,15% 20%,22% 60%,30% 15%,38% 55%,46% 10%,55% 50%,63% 20%,71% 60%,79% 15%,87% 55%,94% 20%,100% 45%,100% 70%,95% 90%,88% 60%,80% 95%,72% 65%,64% 90%,56% 60%,47% 95%,39% 65%,31% 90%,23% 60%,14% 95%,7% 65%,0 90%)}
+
+@media(max-width:600px){
+  .gallery{gap:30px 14px}
+  .gallery .s,.gallery .m{--w:calc(50% - 10px)}
+  .gallery .l{--w:86%}
+  .polaroid{padding:7px 7px 36px}.polaroid figcaption{font-size:17px;bottom:7px}
+  .gallery .polaroid{--y:0px!important}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;translate:0 0}}
+</style>
+</head>
+<body class="lock">
+
+<!-- Reusable paper-cut flowers & hearts (SVG, no image files) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="heart" viewBox="0 0 32 29"><path fill="currentColor" d="M16 28C5 20 1 14 1 8.5 1 4 4.5 1 8.5 1 12 1 14.6 3 16 6c1.4-3 4-5 7.500-5C27.500 1 31 4 31 8.500 31 14 27 20 16 28z"/></symbol>
+  <symbol id="daisy" viewBox="0 0 100 100">
+    <g fill="#e9e0cc" stroke="#fff" stroke-width="4"><circle cx="50" cy="20" r="17"/><circle cx="76" cy="35" r="17"/><circle cx="76" cy="65" r="17"/><circle cx="50" cy="80" r="17"/><circle cx="24" cy="65" r="17"/><circle cx="24" cy="35" r="17"/></g>
+    <circle cx="50" cy="50" r="17" fill="#c9a24a" stroke="#f5e3a8" stroke-width="3"/></symbol>
+  <symbol id="peony" viewBox="0 0 100 100">
+    <g stroke="#fff" stroke-width="3"><circle cx="35" cy="40" r="26" fill="#f2a190"/><circle cx="65" cy="40" r="26" fill="#ee8f7e"/><circle cx="50" cy="65" r="28" fill="#f7b3a3"/><circle cx="50" cy="45" r="19" fill="#e87a6c"/><circle cx="50" cy="48" r="9" fill="#d9604f"/></g></symbol>
+  <symbol id="rose" viewBox="0 0 80 200">
+    <path d="M40 70C42 110 36 150 30 198" stroke="#7a6a3a" stroke-width="5" fill="none"/>
+    <path d="M38 130c-22-4-30-18-32-26 14 2 26 8 32 26zM42 110c20-2 30-14 32-22-14 0-26 6-32 22z" fill="#8c8450"/>
+    <g stroke="#fff" stroke-width="2.500"><ellipse cx="40" cy="42" rx="30" ry="34" fill="#a8382b"/><path d="M14 38c8-14 20-18 26-8 8-12 22-8 26 6-6 20-20 34-26 34S18 58 14 38z" fill="#c4503f"/><path d="M28 36c4-8 10-8 12 0 4-6 10-4 12 2-2 10-8 16-12 16s-10-6-12-18z" fill="#8f2a20"/></g></symbol>
+</svg>
+
+<!-- ============ ROMANTIC OPENING ANIMATION ============ -->
+<div id="intro">
+  <div class="note">
+    <svg class="big" width="78" height="72"><use href="#heart"/></svg>
+    <p class="script" style="font-size:48px;margin-top:8px">For my love</p>
+    <p class="hand">a little scrapbook, made just for you</p>
+    <button id="openBtn">Open our scrapbook</button>
+  </div>
+</div>
+
+<main>
+
+<!-- ========================================================= -->
+<!-- SECTION 1 — OPENING PAGE                                   -->
+<!-- Photos used here: photo1.jpg, photo2.jpg, photo3.jpg        -->
+<!-- ========================================================= -->
+<section class="page" id="top">
+  <svg class="leaf" style="left:-1vw;top:3%" viewBox="0 0 100 100"><use href="#peony"/></svg>
+  <svg class="leaf" style="right:-2vw;top:8%;animation-delay:-3s" viewBox="0 0 100 100"><use href="#daisy"/></svg>
+  <div class="wrap rv">
+    <svg class="heart-cut" viewBox="0 0 32 29"><use href="#heart"/></svg>
+    <div class="sheet">
+      <h1>Happy Valentine’s &amp; Anniversary, My Love!</h1>
+      <div class="hero-photos">
+        <figure class="polaroid p1"><i class="pin"></i><img src="photo1.jpg" alt="Our photo 1"><figcaption>our beginning</figcaption></figure>
+        <figure class="polaroid p2"><i class="pin"></i><img src="photo2.jpg" alt="Our photo 2"><figcaption>you &amp; me</figcaption></figure>
+        <figure class="polaroid p3"><i class="pin"></i><img src="photo3.jpg" alt="Our photo 3"><figcaption>my favorite smile</figcaption></figure>
+      </div>
+      <p class="script msg center">My favorite person, my home, my forever.</p>
+      <!-- Write your two names here (or delete this line) -->
+      <p class="names script">Us, one year and always</p>
+    </div>
+  </div>
+  <svg class="leaf" style="left:3vw;bottom:2%;animation-delay:-5s" viewBox="0 0 100 100"><use href="#daisy"/></svg>
+</section>
+<div class="rip"></div>
+
+<!-- ========================================================= -->
+<!-- SECTION 2 — OUR MEMORIES (gallery)                         -->
+<!-- photo4.jpg … photo12.jpg  (9 photos here + 3 above = 12)    -->
+<!-- To change a caption, just edit the text inside <figcaption>  -->
+<!-- ========================================================= -->
+<section class="page" id="memories">
+  <svg class="leaf" style="right:-2vw;top:4%" viewBox="0 0 100 100"><use href="#peony"/></svg>
+  <svg class="leaf" style="left:-3vw;top:45%;animation-delay:-4s" viewBox="0 0 100 100"><use href="#daisy"/></svg>
+  <div class="wrap">
+    <div class="sheet">
+      <h2 class="rv">Our Memories</h2>
+      <div class="gallery">
+        <figure class="polaroid l rv" style="--r:-3deg;--y:0px"><i class="pin"></i><img src="photo4.jpg" alt="Memory 4" loading="lazy"><figcaption>the day everything changed</figcaption></figure>
+        <figure class="polaroid s rv" style="--r:5deg;--y:30px"><i class="pin"></i><img src="photo5.jpg" alt="Memory 5" loading="lazy"><figcaption>laughing together</figcaption></figure>
+        <figure class="polaroid m rv" style="--r:-5deg;--y:-10px"><span class="tape"></span><img src="photo6.jpg" alt="Memory 6" loading="lazy"><figcaption>adventures with you</figcaption></figure>
+        <figure class="polaroid s rv" style="--r:3deg;--y:20px"><i class="pin"></i><img src="photo7.jpg" alt="Memory 7" loading="lazy"><figcaption>cozy days</figcaption></figure>
+        <figure class="polaroid l rv" style="--r:4deg;--y:-14px"><i class="pin"></i><img src="photo8.jpg" alt="Memory 8" loading="lazy"><figcaption>my favorite place is next to you</figcaption></figure>
+        <figure class="polaroid m rv" style="--r:-4deg;--y:24px"><span class="tape"></span><img src="photo9.jpg" alt="Memory 9" loading="lazy"><figcaption>sweet little moments</figcaption></figure>
+        <figure class="polaroid s rv" style="--r:-2deg;--y:0px"><i class="pin"></i><img src="photo10.jpg" alt="Memory 10" loading="lazy"><figcaption>always you</figcaption></figure>
+        <figure class="polaroid l rv" style="--r:3deg;--y:18px"><i class="pin"></i><img src="photo11.jpg" alt="Memory 11" loading="lazy"><figcaption>our happy place</figcaption></figure>
+        <figure class="polaroid m rv" style="--r:-3deg;--y:-6px"><span class="tape"></span><img src="photo12.jpg" alt="Memory 12" loading="lazy"><figcaption>forever starts here</figcaption></figure>
+      </div>
+      <p class="hand center rv">…and a thousand more to come.</p>
+    </div>
+  </div>
+</section>
+<div class="rip"></div>
+
+<!-- ========================================================= -->
+<!-- SECTION 3 — LOVE LETTER (edit the words freely)             -->
+<!-- ========================================================= -->
+<section class="page" id="letter">
+  <svg class="leaf" style="left:-2vw;top:6%" viewBox="0 0 100 100"><use href="#daisy"/></svg>
+  <div class="wrap rv">
+    <div class="sheet">
+      <h2>A Letter for You</h2>
+      <div class="letter">
+        <p>Happy Valentine’s Day and happy anniversary, my love.</p>
+        <p>Every moment with you has become one of my <span class="hl">favorite memories</span>. Thank you for your love, kindness, laughter, and for making my life more beautiful.</p>
+        <p>If I could choose again, in every lifetime, I would still choose you.</p>
+        <p>Today, tomorrow, and always, my heart belongs to you.</p>
+        <p class="sign">Forever yours ❤️</p>
+      </div>
+    </div>
+  </div>
+  <svg class="leaf" style="right:1vw;bottom:3%;animation-delay:-2s" viewBox="0 0 100 100"><use href="#peony"/></svg>
+</section>
+<div class="rip"></div>
+
+<!-- ========================================================= -->
+<!-- SECTION 4 — FINAL PAGE                                     -->
+<!-- ========================================================= -->
+<section class="page finale" id="forever">
+  <div class="wrap rv">
+    <div class="sheet" style="padding-top:clamp(60px,9vw,100px)">
+      <svg class="heart-cut" viewBox="0 0 32 29"><use href="#heart"/></svg>
+      <svg class="rose" viewBox="0 0 80 200" style="rotate:12deg"><use href="#rose"/></svg>
+      <p class="big">I love you more than words can say.</p>
+      <p class="sub">Happy Valentine’s Day &amp; Our Anniversary.</p>
+      <p class="forever">Forever Yours <span class="h">❤️</span></p>
+    </div>
+  </div>
+</section>
+<div style="height:8vh"></div>
+</main>
+
+<script>
+/* 1. Opening: tap the button, the cover fades away */
+document.getElementById('openBtn').onclick = function(){
+  document.getElementById('intro').classList.add('gone');
+  document.body.classList.remove('lock');
+};
+
+/* 2. Photos & sheets fade in softly while scrolling */
+var io = new IntersectionObserver(function(es){
+  es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+},{threshold:.12});
+document.querySelectorAll('.rv').forEach(function(el,i){
+  el.style.transitionDelay = (i%3)*.12+'s'; io.observe(el);
+});
+
+/* 3. Gentle floating hearts */
+function heart(){
+  var h = document.createElementNS('http://www.w3.org/2000/svg','svg');
+  var s = 12+Math.random()*18;
+  h.setAttribute('class','fh'); h.setAttribute('width',s); h.setAttribute('height',s*.9); h.setAttribute('viewBox','0 0 32 29');
+  h.innerHTML = '<use href="#heart"/>';
+  h.style.left = Math.random()*100+'vw';
+  h.style.setProperty('--dx',(Math.random()*80-40)+'px');
+  h.style.animationDuration = (9+Math.random()*8)+'s';
+  document.body.appendChild(h);
+  setTimeout(function(){h.remove()},18000);
+}
+setInterval(heart,1400);
+</script>
+</body>
+</html>
